@@ -17,26 +17,62 @@ a hint: the modulo operator with the number 26 will come in hand
 https://www.geeksforgeeks.org/caesar-cipher-in-cryptography/
 */
 
-int main() {
-    // Encrypts from char to int
-    char a = 'z';
-    int ia = (int)a - 96; 
+// Encryption function 
+// recieves the text and the shift key and returns encrypted text
+std::string Encrypt(std::string text, int ShiftKey)
+{
+    std::string result = "";
 
-    std::cout << ia;
+    // Loops through every character in the text
+    for (int i = 0; i < text.length(); i++)
+    {
+        // If uppercase or lowercase it goes up or down different values
+        if (isupper(text[i]))
+        {
+            result += char(int(text[i] + ShiftKey - 65) % 26 + 65);
+        }
+        else
+        {
+            result += char(int(text[i] + ShiftKey - 97) % 26 + 97);
+        }
+        
+    }
+    
+    // Returns the encrypted text
+    return result;
+}
 
-    // Decrypts from int to char
-    int b = 1 + 96;
-    char ib = (char)b;
+// Decryption function
+// Recieves encrypted text and shift key and returns decrypted text
+std::string Decrypt(std::string text, int ShiftKey)
+{
+    std::string result = "";
 
-    std::cout << ib;
+    for (int i = 0; i < text.length(); i++)
+    {
+        if (isupper(text[i]))
+        {
+            result += char(int(text[i] - ShiftKey + 65) % 26 + 65);
+        }
+        else
+        {
+            result += char(int(text[i] - ShiftKey + 97) % 26 + 97);
+        }
+    }
 
-    // The message i want to encrypt
-    std::string plaintext = "Hello world!";
+    return result;
+}
 
-    // declare the array
-    std::vector<char> arr;      // Not sure what data type you want to store in here
+int main() 
+{
+    // Sets the values
+    std::string text = "IMGOINGTOKILLMYSELF";
+    int ShiftKey = 34; 
 
-    // For loop the plaintext and turn each char into an integer whilst appending each int to the array
+    
+    std::string EncryptedText = Encrypt(text, ShiftKey);
+    std::cout << "The Encrypted text: " << EncryptedText << "\n";
+    std::cout << "The Decrypted text: " << Decrypt(EncryptedText, ShiftKey);
 
-    // For loop again the array and add the key number to the stored nums
+    return 0;
 }
