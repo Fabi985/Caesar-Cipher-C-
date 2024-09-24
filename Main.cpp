@@ -26,11 +26,12 @@ std::string Encrypt(std::string text, int ShiftKey)
     // Loops through every character in the text
     for (int i = 0; i < text.length(); i++)
     {
-        // If uppercase or lowercase it goes up or down different values
+        // Upper case encrypt
         if (isupper(text[i]))
         {
             result += char(int(text[i] + ShiftKey - 65) % 26 + 65);
         }
+        // Lower case encrypt
         else
         {
             result += char(int(text[i] + ShiftKey - 97) % 26 + 97);
@@ -44,19 +45,19 @@ std::string Encrypt(std::string text, int ShiftKey)
 
 // Decryption function
 // Recieves encrypted text and shift key and returns decrypted text
-std::string Decrypt(std::string text, int ShiftKey)
+std::string Decrypt(std::string EncryptedText, int ShiftKey)
 {
     std::string result = "";
 
-    for (int i = 0; i < text.length(); i++)
+    for (int i = 0; i < EncryptedText.length(); i++)
     {
-        if (isupper(text[i]))
+        if (isupper(EncryptedText[i]))
         {
-            result += char(int(text[i] - ShiftKey + 65) % 26 + 65);
+            result += char(int(EncryptedText[i] - ShiftKey + 65) % 26 + 65);
         }
         else
         {
-            result += char(int(text[i] - ShiftKey + 97) % 26 + 97);
+            result += char(int(EncryptedText[i] - ShiftKey - 97) % 26 + 97);
         }
     }
 
@@ -66,10 +67,14 @@ std::string Decrypt(std::string text, int ShiftKey)
 int main() 
 {
     // Sets the values
-    std::string text = "IMGOINGTOKILLMYSELF";
-    int ShiftKey = 34; 
+    std::string text = "";
+    int ShiftKey = 3; 
 
+    // Gets the user input and saves it as text variable
+    std::cout << "Enter a phrase you want encrypted: ";
+    std::cin >> text; 
     
+    // Outputs the User encrypted text and decrypted text
     std::string EncryptedText = Encrypt(text, ShiftKey);
     std::cout << "The Encrypted text: " << EncryptedText << "\n";
     std::cout << "The Decrypted text: " << Decrypt(EncryptedText, ShiftKey);
